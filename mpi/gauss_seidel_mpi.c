@@ -2,6 +2,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void load_data(double *A, double *b, int N) {
+    FILE *file_A = fopen("data/matrix_A.txt", "r");
+    FILE *file_b = fopen("data/vector_b.txt", "r");
+
+    if (file_A == NULL || file_b == NULL) {
+        perror("Errore nell'apertura dei file");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            fscanf(file_A, "%lf", &A[i * N + j]);
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        fscanf(file_b, "%lf", &b[i]);
+    }
+
+    fclose(file_A);
+    fclose(file_b);
+}
+
 void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter, double tol) {
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -52,7 +75,13 @@ int main(int argc, char *argv[]) {
     double *b = (double *)malloc(N * sizeof(double));
     double *x = (double *)malloc(N * sizeof(double));
     
-    // Initialize A, b, x here
+    // Caricamento dei dati
+    load_data(A, b, N);
+    
+    // Inizializzazione del vettore soluzione
+    for (int i = 0; i < N; i++) {
+        x[i] = 0.0;
+    }
     
     parallel_gauss_seidel(A, b, x, N, 1000, 1e-6);
 
