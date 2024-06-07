@@ -22,7 +22,7 @@ Il progetto è organizzato nelle seguenti directory:
   - `gauss_seidel_cuda_output.txt` - File di output generato dall'esecuzione del codice CUDA.
 
 - `report/`
-  - `relazione_progetto.tex` - Relazione in LaTeX che descrive il progetto.
+  - `relazione_progetto.pdf` - Relazione realizzata in LaTeX che descrive il progetto.
 
 ## Requisiti
 
