@@ -43,6 +43,13 @@ Il progetto è organizzato nelle seguenti directory:
     module load cuda
     ```
 
+## Generazione del Dataset
+
+Per generare un dataset sintetico, utilizzare lo script Python fornito:
+
+```sh
+python generate_dataset.py
+
 ### Implementazione MPI
 
 1. **Compilare il Codice MPI**:
