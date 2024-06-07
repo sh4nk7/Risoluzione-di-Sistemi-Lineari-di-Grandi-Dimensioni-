@@ -60,6 +60,7 @@ python generate_dataset.py
 2. **Eseguire il Codice MPI**:
     Utilizzare lo script SLURM per inviare il job al cluster:
     ```sh
+    cd mpi
     sbatch gauss_seidel_mpi.slurm
     ```
 3. **Verificare l'Output**:
@@ -75,6 +76,7 @@ python generate_dataset.py
 2. **Eseguire il Codice OpenMP**:
     Utilizzare lo script SLURM per inviare il job al cluster:
     ```sh
+    cd ../openmp
     sbatch gauss_seidel_omp.slurm
     ```
 3. **Verificare l'Output**:
@@ -90,6 +92,7 @@ python generate_dataset.py
 2. **Eseguire il Codice CUDA**:
     Utilizzare lo script SLURM per inviare il job al cluster:
     ```sh
+    cd ../cuda
     sbatch gauss_seidel_cuda.slurm
     ```
 3. **Verificare l'Output**:
