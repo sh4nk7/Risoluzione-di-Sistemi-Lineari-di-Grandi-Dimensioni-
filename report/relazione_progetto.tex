@@ -1,0 +1,84 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Risoluzione di Sistemi Lineari di Grandi Dimensioni Utilizzando Calcolo Parallelo su Cluster HPC}
+\author{Nome Autore}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Questo progetto descrive l'implementazione e l'esecuzione di algoritmi paralleli per la risoluzione di sistemi lineari di grandi dimensioni utilizzando il metodo di Gauss-Seidel su un cluster di calcolo ad alte prestazioni (HPC) presso l'Università di Parma (UniPr). Vengono esplorati tre approcci differenti: MPI, OpenMP e CUDA, per sfruttare al meglio le risorse del cluster HPC.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduzione}
+La risoluzione di sistemi lineari di grandi dimensioni è una delle problematiche fondamentali nel campo del calcolo scientifico. Questo progetto mira a implementare il metodo di Gauss-Seidel in modo parallelo utilizzando tre differenti tecnologie: MPI per il calcolo distribuito, OpenMP per il calcolo parallelo su CPU e CUDA per il calcolo parallelo su GPU.
+
+\section{Implementazione}
+
+\subsection{Implementazione MPI}
+L'implementazione MPI del metodo di Gauss-Seidel prevede l'utilizzo della libreria MPI per la comunicazione tra processi. Di seguito vengono descritti i passaggi principali dell'algoritmo.
+
+\begin{itemize}
+    \item \textbf{Inizializzazione MPI}: Viene inizializzato l'ambiente MPI con \texttt{MPI\_Init}, ottenendo il rank del processo corrente e il numero totale di processi.
+    \item \textbf{Divisione del lavoro}: La matrice \( A \) e il vettore \( b \) vengono suddivisi in parti uguali tra i processi utilizzando \texttt{MPI\_Scatter}. Ogni processo riceve un sottoinsieme delle righe della matrice e del vettore.
+    \item \textbf{Iterazioni di Gauss-Seidel}: Per ogni iterazione, ogni processo calcola i nuovi valori del proprio sottoinsieme del vettore soluzione \( x \). La somma dei prodotti esclusi dalla diagonale viene calcolata e sottratta dal termine noto, poi divisa per l'elemento diagonale.
+    \item \textbf{Comunicazione tra processi}: I nuovi valori calcolati dai processi vengono comunicati a tutti gli altri processi utilizzando \texttt{MPI\_Allgather}, in modo che ogni processo abbia una copia aggiornata del vettore soluzione \( x \).
+    \item \textbf{Controllo della convergenza}: Viene calcolata la norma del residuo locale per ogni processo e i risultati vengono ridotti a una somma globale utilizzando \texttt{MPI\_Allreduce}. Se la norma globale è al di sotto di una certa soglia di tolleranza, l'iterazione si interrompe.
+    \item \textbf{Pulizia e finalizzazione}: Alla fine dell'algoritmo, la memoria allocata viene liberata e l'ambiente MPI viene chiuso con \texttt{MPI\_Finalize}.
+\end{itemize}
+
+\subsection{Implementazione OpenMP}
+L'implementazione OpenMP sfrutta la parallelizzazione su CPU tramite direttive di compilazione. I passaggi principali sono i seguenti:
+
+\begin{itemize}
+    \item \textbf{Inizializzazione dei dati}: La matrice \( A \) e i vettori \( b \) e \( x \) vengono inizializzati.
+    \item \textbf{Iterazioni di Gauss-Seidel}: Utilizzando la direttiva \texttt{\#pragma omp parallel for}, il ciclo principale dell'algoritmo viene parallelizzato. Ogni thread calcola i nuovi valori del vettore \( x \) per un sottoinsieme delle righe della matrice.
+    \item \textbf{Controllo della convergenza}: La convergenza viene verificata calcolando la norma del residuo e interrompendo l'iterazione se la norma è inferiore a una soglia di tolleranza.
+    \item \textbf{Pulizia}: Alla fine dell'algoritmo, la memoria allocata viene liberata.
+\end{itemize}
+
+\subsection{Implementazione CUDA}
+L'implementazione CUDA sfrutta la parallelizzazione su GPU per accelerare il calcolo. I passaggi principali sono i seguenti:
+
+\begin{itemize}
+    \item \textbf{Allocazione e copia dei dati}: La matrice \( A \) e i vettori \( b \) e \( x \) vengono copiati dalla memoria dell'host alla memoria del dispositivo (GPU) utilizzando \texttt{cudaMalloc} e \texttt{cudaMemcpy}.
+    \item \textbf{Kernel di Gauss-Seidel}: Un kernel CUDA viene lanciato per calcolare i nuovi valori del vettore \( x \) in parallelo su più thread. Ogni thread calcola il valore per un singolo elemento del vettore.
+    \item \textbf{Iterazioni}: Il kernel viene lanciato ripetutamente per il numero massimo di iterazioni o fino al raggiungimento della convergenza.
+    \item \textbf{Copia dei risultati}: I risultati vengono copiati dalla memoria del dispositivo alla memoria dell'host utilizzando \texttt{cudaMemcpy}.
+    \item \textbf{Pulizia}: La memoria allocata sulla GPU viene liberata con \texttt{cudaFree}.
+\end{itemize}
+
+\section{Risultati}
+\subsection{Prestazioni}
+Le prestazioni delle implementazioni MPI, OpenMP e CUDA sono state valutate in termini di tempo di esecuzione e velocità di convergenza. I risultati mostrano che ciascun approccio ha vantaggi specifici in base alla natura del problema e alla configurazione hardware.
+
+\subsection{Analisi}
+Un'analisi dettagliata delle prestazioni rivela che:
+\begin{itemize}
+    \item L'implementazione MPI è efficiente per problemi molto grandi distribuiti su più nodi.
+    \item L'implementazione OpenMP è semplice da implementare e offre buone prestazioni su sistemi con molte CPU.
+    \item L'implementazione CUDA fornisce un'accelerazione significativa per problemi che possono essere suddivisi efficacemente tra molti core della GPU.
+\end{itemize}
+
+\section{Conclusioni}
+Questo progetto ha dimostrato come diverse tecniche di parallelizzazione possono essere applicate per risolvere sistemi lineari di grandi dimensioni utilizzando il metodo di Gauss-Seidel. Ogni approccio (MPI, OpenMP, CUDA) ha mostrato vantaggi specifici e la scelta della tecnologia dipende dalle risorse disponibili e dalle caratteristiche del problema da risolvere.
+
+\begin{thebibliography}{9}
+\bibitem{mpi}
+    \textit{Using MPI: Portable Parallel Programming with the Message Passing Interface}, William Gropp, Ewing Lusk, Anthony Skjellum.
+\bibitem{openmp}
+    \textit{Using OpenMP: Portable Shared Memory Parallel Programming}, Barbara Chapman, Gabriele Jost, Ruud van der Pas.
+\bibitem{cuda}
+    \textit{CUDA Programming: A Developer's Guide to Parallel Computing with GPUs}, Shane Cook.
+\end{thebibliography}
+
+\end{document}
