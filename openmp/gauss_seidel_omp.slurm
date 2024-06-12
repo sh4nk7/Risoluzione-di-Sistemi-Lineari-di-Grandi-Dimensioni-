@@ -1,12 +1,16 @@
 #!/bin/bash
 #SBATCH --job-name=gauss_seidel_omp
-#SBATCH --output=gauss_seidel_omp_output.txt
+#SBATCH --output=gauss_seidel_omp.out
+#SBATCH --error=gauss_seidel_omp.err
+#SBATCH --time=01:00:00
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --time=00:30:00
-#SBATCH --partition=compute
+#SBATCH --partition=cpu
+#SBATCH --qos=cpu
 
 module load gcc
+module load gnu8/8.3.0
+module load openmpi4/4.1.1  
+module load cuda/11.6.0
 
-gcc -fopenmp -o gauss_seidel_omp gauss_seidel_omp.c
-export OMP_NUM_THREADS=4
-./gauss_seidel_omp
+srun ./gauss_seidel_omp matrix.txt vector.txt
