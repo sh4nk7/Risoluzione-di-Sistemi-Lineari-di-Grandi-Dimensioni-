@@ -1,10 +1,11 @@
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 void load_data(double *A, double *b, int N) {
-    FILE *file_A = fopen("data/matrix_A.txt", "r");
-    FILE *file_b = fopen("data/vector_b.txt", "r");
+    FILE *file_A = fopen("matrix.txt", "r");
+    FILE *file_b = fopen("vector.txt", "r");
 
     if (file_A == NULL || file_b == NULL) {
         perror("Errore nell'apertura dei file");
@@ -29,12 +30,12 @@ void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter,
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    
+
     int rows_per_proc = N / size;
     double *local_A = (double *)malloc(rows_per_proc * N * sizeof(double));
     double *local_b = (double *)malloc(rows_per_proc * sizeof(double));
     double *local_x = (double *)malloc(rows_per_proc * sizeof(double));
-    
+
     MPI_Scatter(A, rows_per_proc * N, MPI_DOUBLE, local_A, rows_per_proc * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Scatter(b, rows_per_proc, MPI_DOUBLE, local_b, rows_per_proc, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
@@ -50,15 +51,19 @@ void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter,
         }
 
         MPI_Allgather(local_x, rows_per_proc, MPI_DOUBLE, x, rows_per_proc, MPI_DOUBLE, MPI_COMM_WORLD);
-        
+
         double norm = 0.0;
         for (int i = 0; i < rows_per_proc; i++) {
-            norm += (local_b[i] - local_A[i * N + (rank * rows_per_proc + i)] * local_x[i]) * 
+            norm += (local_b[i] - local_A[i * N + (rank * rows_per_proc + i)] * local_x[i]) *
                     (local_b[i] - local_A[i * N + (rank * rows_per_proc + i)] * local_x[i]);
         }
         double global_norm;
         MPI_Allreduce(&norm, &global_norm, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-        
+
+        if (rank == 0) {
+            printf("Iterazione %d, norma: %e\n", iter, global_norm);
+        }
+
         if (global_norm < tol) break;
     }
 
@@ -69,21 +74,34 @@ void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter,
 
 int main(int argc, char *argv[]) {
     MPI_Init(&argc, &argv);
-    
-    int N = 1000;
+
+    int N = 1000; // Cambia questo numero se il tuo input ha una dimensione diversa
     double *A = (double *)malloc(N * N * sizeof(double));
     double *b = (double *)malloc(N * sizeof(double));
     double *x = (double *)malloc(N * sizeof(double));
-    
-    // Caricamento dei dati
-    load_data(A, b, N);
-    
+
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    // Caricamento dei dati solo nel processo 0
+    if (rank == 0) {
+        load_data(A, b, N);
+    }
+
     // Inizializzazione del vettore soluzione
     for (int i = 0; i < N; i++) {
         x[i] = 0.0;
     }
-    
+
     parallel_gauss_seidel(A, b, x, N, 1000, 1e-6);
+
+    if (rank == 0) {
+        printf("Soluzione trovata:\n");
+        for (int i = 0; i < N; i++) {
+            printf("%f ", x[i]);
+        }
+        printf("\n");
+    }
 
     free(A);
     free(b);
