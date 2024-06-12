@@ -2,27 +2,33 @@
 #include <stdlib.h>
 #include <cuda.h>
 
-void load_data(double *A, double *b, int N) {
-    FILE *file_A = fopen("data/matrix_A.txt", "r");
-    FILE *file_b = fopen("data/vector_b.txt", "r");
+#define CUDA_CHECK(call) { \
+    cudaError_t error = call; \
+    if (error != cudaSuccess) { \
+        fprintf(stderr, "Errore CUDA: %s\n", cudaGetErrorString(error)); \
+        exit(EXIT_FAILURE); \
+    } \
+}
 
-    if (file_A == NULL || file_b == NULL) {
-        perror("Errore nell'apertura dei file");
-        exit(EXIT_FAILURE);
-    }
+#define FILE_CHECK(file) { \
+    if (file == NULL) { \
+        perror("Errore nell'apertura del file"); \
+        exit(EXIT_FAILURE); \
+    } \
+}
 
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            fscanf(file_A, "%lf", &A[i * N + j]);
+void load_data(const char *filename, double *data, int size) {
+    FILE *file = fopen(filename, "r");
+    FILE_CHECK(file);
+
+    for (int i = 0; i < size; i++) {
+        if (fscanf(file, "%lf", &data[i]) != 1) {
+            fprintf(stderr, "Errore durante il caricamento dei dati dal file %s\n", filename);
+            exit(EXIT_FAILURE);
         }
     }
 
-    for (int i = 0; i < N; i++) {
-        fscanf(file_b, "%lf", &b[i]);
-    }
-
-    fclose(file_A);
-    fclose(file_b);
+    fclose(file);
 }
 
 __global__ void gauss_seidel_kernel(double *A, double *b, double *x, int N, int max_iter, double tol) {
@@ -43,40 +49,48 @@ __global__ void gauss_seidel_kernel(double *A, double *b, double *x, int N, int 
 
 int main() {
     int N = 1000;
-    double *A = (double *)malloc(N * N * sizeof(double));
-    double *b = (double *)malloc(N * sizeof(double));
-    double *x = (double *)malloc(N * sizeof(double));
+    double *A, *b, *x;
+    A = (double *)malloc(N * N * sizeof(double));
+    b = (double *)malloc(N * sizeof(double));
+    x = (double *)malloc(N * sizeof(double));
 
-    // Caricamento dei dati
-    load_data(A, b, N);
-    
-    // Inizializzazione del vettore soluzione
-    for (int i = 0; i < N; i++) {
-        x[i] = 0.0;
+    if (A == NULL || b == NULL || x == NULL) {
+        fprintf(stderr, "Errore nell'allocazione della memoria\n");
+        exit(EXIT_FAILURE);
     }
 
-    double *d_A, *d_b, *d_x;
-    cudaMalloc((void **)&d_A, N * N * sizeof(double));
-    cudaMalloc((void **)&d_b, N * sizeof(double));
-    cudaMalloc((void **)&d_x, N * sizeof(double));
+    load_data("matrix.txt", A, N * N);
+    load_data("vector.txt", b, N);
 
-    cudaMemcpy(d_A, A, N * N * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b, N * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_x, x, N * sizeof(double), cudaMemcpyHostToDevice);
+    double *d_A, *d_b, *d_x;
+    CUDA_CHECK(cudaMalloc((void **)&d_A, N * N * sizeof(double)));
+    CUDA_CHECK(cudaMalloc((void **)&d_b, N * sizeof(double)));
+    CUDA_CHECK(cudaMalloc((void **)&d_x, N * sizeof(double)));
+
+    CUDA_CHECK(cudaMemcpy(d_A, A, N * N * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(d_b, b, N * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemset(d_x, 0, N * sizeof(double))); // Inizializza x a 0
 
     int blockSize = 256;
     int numBlocks = (N + blockSize - 1) / blockSize;
 
     gauss_seidel_kernel<<<numBlocks, blockSize>>>(d_A, d_b, d_x, N, 1000, 1e-6);
+    CUDA_CHECK(cudaDeviceSynchronize());
 
-    cudaMemcpy(x, d_x, N * sizeof(double), cudaMemcpyDeviceToHost);
+    CUDA_CHECK(cudaMemcpy(x, d_x, N * sizeof(double), cudaMemcpyDeviceToHost));
 
-    cudaFree(d_A);
-    cudaFree(d_b);
-    cudaFree(d_x);
+    printf("Risultati:\n");
+    for (int i = 0; i < N; i++) {
+        printf("%lf ", x[i]);
+    }
+    printf("\n");
+
     free(A);
     free(b);
     free(x);
+    cudaFree(d_A);
+    cudaFree(d_b);
+    cudaFree(d_x);
 
     return 0;
 }
