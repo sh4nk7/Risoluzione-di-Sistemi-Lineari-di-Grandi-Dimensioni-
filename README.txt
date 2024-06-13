@@ -110,6 +110,4 @@ python confronto_risultati.py
 
 ## Relazione
 
-La relazione del progetto è contenuta nel file `report/relazione_progetto.tex`. Per compilare la relazione in formato PDF, utilizzare il seguente comando:
-```sh
-pdflatex relazione_progetto.tex
+La relazione del progetto è contenuta nel file `report/relazione_progetto.pdf`. 
