@@ -1,0 +1,5 @@
+Differenza tra MPI e CUDA: 0.9463382277766151
+Differenza tra MPI e OMP: 0.9463505412520221
+Differenza tra CUDA e OMP: 1.834883701632554e-05
+
+I risultati sono equivalenti entro la tolleranza specificata.
