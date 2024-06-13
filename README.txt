@@ -98,6 +98,16 @@ python generate_dataset.py
 3. **Verificare l'Output**:
     L'output sarà disponibile nel file `gauss_seidel_cuda_output.txt`.
 
+## Confronto dei Risultati
+
+Per confrontare i risultati ottenuti dalle diverse implementazioni (MPI, OpenMP, CUDA), è stato utilizzato uno script Python che carica i dati dai file di output generati e calcola le differenze tra i risultati. Il file di confronto dei risultati `confronto_risultati.txt` contiene le differenze e indica se i risultati rientrano entro una tolleranza specificata.
+
+Per eseguire lo script di confronto dei risultati:
+
+```sh
+python confronto_risultati.py
+
+
 ## Relazione
 
 La relazione del progetto è contenuta nel file `report/relazione_progetto.tex`. Per compilare la relazione in formato PDF, utilizzare il seguente comando:
