@@ -38,9 +38,11 @@ Il progetto è organizzato nelle seguenti directory:
 
 2. **Caricare i Moduli Necessari**: Prima di compilare ed eseguire i programmi, assicurarsi di caricare i moduli necessari per MPI, OpenMP e CUDA. Esempio:
     ```sh
-    module load mpi
-    module load openmp
-    module load cuda
+    module purge
+    module load gcc
+    module load gnu8/8.3.0
+    module load openmpi4/4.1.1
+    module load cuda/11.6.0
     ```
 
 ## Generazione del Dataset
