@@ -47,7 +47,15 @@ __global__ void gauss_seidel_kernel(double *A, double *b, double *x, int N, int 
     }
 }
 
-int main() {
+int main(int argc, char **argv) {
+    if (argc < 3) {
+        fprintf(stderr, "Uso: %s <file_matrice> <file_vettore>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    const char *matrix_file = argv[1];
+    const char *vector_file = argv[2];
+
     int N = 1000;
     double *A, *b, *x;
     A = (double *)malloc(N * N * sizeof(double));
@@ -59,8 +67,8 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    load_data("matrix.txt", A, N * N);
-    load_data("vector.txt", b, N);
+    load_data(matrix_file, A, N * N);
+    load_data(vector_file, b, N);
 
     double *d_A, *d_b, *d_x;
     CUDA_CHECK(cudaMalloc((void **)&d_A, N * N * sizeof(double)));
