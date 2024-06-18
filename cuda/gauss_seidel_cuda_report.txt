@@ -1,0 +1,13 @@
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 0.957124292 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1   4) cuda/11.6.0
+
+ 
+
+
