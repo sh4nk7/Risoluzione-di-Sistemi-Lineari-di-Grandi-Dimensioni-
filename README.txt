@@ -88,7 +88,7 @@ python generate_dataset.py
 
 1. **Compilare il Codice CUDA**:
     ```sh
-    nvcc -o gauss_seidel_cuda gauss_seidel_cuda.cu
+    nvcc -arch=compute_80 -o gauss_seidel_cuda gauss_seidel_cuda.cu
     ```
 
 2. **Eseguire il Codice CUDA**:
