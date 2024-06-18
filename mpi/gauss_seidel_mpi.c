@@ -26,11 +26,7 @@ void load_data(double *A, double *b, int N) {
     fclose(file_b);
 }
 
-void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter, double tol) {
-    int rank, size;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-
+void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter, double tol, int rank, int size) {
     int rows_per_proc = N / size;
     double *local_A = (double *)malloc(rows_per_proc * N * sizeof(double));
     double *local_b = (double *)malloc(rows_per_proc * sizeof(double));
@@ -75,13 +71,14 @@ void parallel_gauss_seidel(double *A, double *b, double *x, int N, int max_iter,
 int main(int argc, char *argv[]) {
     MPI_Init(&argc, &argv);
 
+    int rank, size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
     int N = 1000; // Cambia questo numero se il tuo input ha una dimensione diversa
     double *A = (double *)malloc(N * N * sizeof(double));
     double *b = (double *)malloc(N * sizeof(double));
     double *x = (double *)malloc(N * sizeof(double));
-
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     // Caricamento dei dati solo nel processo 0
     if (rank == 0) {
@@ -93,7 +90,7 @@ int main(int argc, char *argv[]) {
         x[i] = 0.0;
     }
 
-    parallel_gauss_seidel(A, b, x, N, 1000, 1e-6);
+    parallel_gauss_seidel(A, b, x, N, 1000, 1e-6, rank, size);
 
     if (rank == 0) {
         printf("Soluzione trovata:\n");
