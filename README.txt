@@ -12,7 +12,7 @@ Il progetto è organizzato nelle seguenti directory:
   - `gauss_seidel_mpi_output.txt` - File di output generato dall'esecuzione del codice MPI.
 
 - `openmp/`
-  - `gauss_seidel_omp.c` - Codice sorgente C per l'implementazione OpenMP.
+  - `gauss_seidel_omp4.c` - Codice sorgente C per l'implementazione OpenMP.
   - `gauss_seidel_omp.slurm` - Script SLURM per eseguire il codice OpenMP sul cluster.
   - `gauss_seidel_omp_output.txt` - File di output generato dall'esecuzione del codice OpenMP.
 
@@ -102,13 +102,11 @@ python generate_dataset.py
 
 ## Confronto dei Risultati
 
-Per confrontare i risultati ottenuti dalle diverse implementazioni (MPI, OpenMP, CUDA), è stato utilizzato uno script Python che carica i dati dai file di output generati e calcola le differenze tra i risultati. Il file di confronto dei risultati `confronto_risultati.txt` contiene le differenze e indica se i risultati rientrano entro una tolleranza specificata.
+L'implementazione CUDA ha ottenuto il tempo di esecuzione più basso tra tutte le implementazioni, con soli 0.424990 secondi. Questo è dovuto all'efficace utilizzo della potenza computazionale della GPU Tesla P100-PCIE-12GB, sfruttando 256 thread per blocco distribuiti su 4 blocchi. La parallela parallelizzazione su GPU si è dimostrata molto efficace per questo tipo di calcolo intensivo.
 
-Per eseguire lo script di confronto dei risultati:
+L'implementazione OpenMP ha mostrato un tempo di esecuzione di 0.957124292 secondi, utilizzando 4 thread su 4 core. Sebbene l'efficienza sia buona, risulta essere più lenta rispetto alla versione CUDA. Questo suggerisce che la parallelizzazione su CPU tramite OpenMP è meno performante rispetto alla GPU per questo tipo di algoritmo.
 
-```sh
-python confronto_risultati.py
-
+L'implementazione MPI ha registrato un tempo di esecuzione di 3 secondi, utilizzando 4 processi con 1 core ciascuno. Questo è significativamente più lento rispetto a entrambe le altre implementazioni. La divisione del lavoro tra più processi su nodi separati può introdurre un overhead significativo nella comunicazione e nella coordinazione, influenzando le prestazioni complessive.
 
 ## Relazione
 
