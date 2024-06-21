@@ -1,0 +1,57 @@
+Generazione del report finale
+
+gauss_seidel_cuda
+
+Tempo di esecuzione: 
+Simulazione 1   1.885732880 secondi
+Simulazione 2   1.866474739 secondi
+Simulazione 3   1.763836736 secondi
+Simulazione 4   1.755523333 secondi
+Simulazione 5   1.797692610 secondi
+Simulazione 6   1.770764405 secondi
+Simulazione 7   1.790602124 secondi
+Simulazione 8   1.757919604 secondi
+Simulazione 9   1.758527768 secondi
+Simulazione 10  1.721499221 secondi
+
+
+Media del tempo di esecuzione: 1.780434955 secondi
+Deviazione standard del tempo di esecuzione: 0.050368 secondi
+Dataset dimensione (N): 1000
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1   4) cuda/11.6.0
+
+
+gauss_seidel_cuda_sequential
+
+Tempo di esecuzione: 
+Simulazione 1   4.743185893 secondi
+Simulazione 2   4.681277770 secondi
+Simulazione 3   4.726135758 secondi
+Simulazione 4   4.754922817 secondi
+Simulazione 5   4.691770923 secondi
+Simulazione 6   5.169173921 secondi
+Simulazione 7   5.179004519 secondi
+Simulazione 8   5.197079002 secondi
+Simulazione 9   5.028107278 secondi
+Simulazione 10  5.183991062 secondi
+
+Dataset dimensione (N): 1000
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+Media del tempo di esecuzione: 4.984285 secondi
+Deviazione standard del tempo di esecuzione: 0.210243 secondi
+
+lo speedup è circa 2.801 volte

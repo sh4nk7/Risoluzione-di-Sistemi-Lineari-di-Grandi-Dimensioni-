@@ -1,0 +1,133 @@
+Generazione del report finale
+Simulazione 1
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 4.743185893 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 2
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 4.681277770 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 3
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 4.726135758 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 4
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 4.754922817 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 5
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 4.691770923 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 6
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 5.169173921 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 7
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 5.179004519 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+
+Simulazione 8
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 5.197079002 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+
+Simulazione 9
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 5.028107278 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+
+
+Simulazione 10
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 5.183991062 secondi
+GPU utilizzata: Tesla P100-PCIE-12GB
+Numero di thread per blocco: 256
+Numero di blocchi: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) cuda/11.6.0
+
+ 
+Media del tempo di esecuzione: 4.984285 secondi
+Deviazione standard del tempo di esecuzione: 0.210243 secondi
+
+
