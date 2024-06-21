@@ -1,0 +1,58 @@
+gauss_seidel_sequential_mpi
+
+Tempo di esecuzione: 
+1.348994477 secondi
+1.313081507 secondi
+1.771444765 secondi
+1.075728665 secondi
+1.832254922 secondi
+1.831234737 secondi
+1.298964893 secondi
+1.177077039 secondi
+1.638124650 secondi
+1.208834609 secondi
+
+
+Media dei tempi di esecuzione: 1.4495740264 secondi 
+Deviazione standard dei tempi di esecuzione: 0.2747110609 secondi
+
+Dataset dimensione (N): 1000
+Numero di processi MPI: 4
+Numero di core utilizzati per processo: 1
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1
+
+
+gauss_seidel_mpi
+
+Tempo di esecuzione: 
+1.167416314 secondi
+1.233955083 secondi
+1.570645092 secondi
+0.983299543 secondi
+0.943842407 secondi
+0.933490781 secondi
+1.218164577 secondi
+1.549680499 secondi
+0.989811741 secondi
+1.064352133 secondi
+
+
+Media dei tempi di esecuzione: 1.165465817 secondi
+Deviazione standard dei tempi di esecuzione: 0.222812734 secondi
+
+Dataset dimensione (N): 1000
+Numero di processi MPI: 4
+Numero di core utilizzati per processo: 1
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1
+
+
+
+
+Il valore di speedup del programma parallelo MPI rispetto al programma sequenziale è approssimativamente 1.2437
+

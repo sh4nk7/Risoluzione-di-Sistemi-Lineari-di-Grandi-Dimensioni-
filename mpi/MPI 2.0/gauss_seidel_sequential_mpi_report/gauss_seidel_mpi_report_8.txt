@@ -1,0 +1,12 @@
+Dataset dimensione (N): 1000
+Tempo di esecuzione: 1.177077039 secondi
+Numero di processi MPI: 4
+Numero di core utilizzati per processo: 1
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1
+
+ 
+
+
