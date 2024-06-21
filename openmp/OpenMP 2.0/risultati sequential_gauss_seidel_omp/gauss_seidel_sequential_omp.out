@@ -1,0 +1,21 @@
+Tempo di esecuzione sequenziale: 3.450000 secondi
+Tempo di esecuzione sequenziale: 3.430000 secondi
+Tempo di esecuzione sequenziale: 3.500000 secondi
+Tempo di esecuzione sequenziale: 5.540000 secondi
+Tempo di esecuzione sequenziale: 7.400000 secondi
+Tempo di esecuzione sequenziale: 7.400000 secondi
+Tempo di esecuzione sequenziale: 7.390000 secondi
+Tempo di esecuzione sequenziale: 7.380000 secondi
+Tempo di esecuzione sequenziale: 8.330000 secondi
+Tempo di esecuzione sequenziale: 8.320000 secondi
+
+
+Media del tempo di esecuzione: 6.474 secondi
+Deviazione standard del tempo di esecuzione: 1.599 secondi
+
+Numero di thread OpenMP: 4
+Numero di core utilizzati: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1   4) cuda/11.6.0

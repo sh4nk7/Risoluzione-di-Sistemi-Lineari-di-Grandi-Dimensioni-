@@ -1,0 +1,53 @@
+gauss_seidel_omp
+
+Tempi di esecuzione:
+0.290229 secondi
+0.333691 secondi
+0.54053 secondi
+0.479068 secondi
+0.558328 secondi
+0.528310 secondi
+1.564942 secondi
+0.495361 secondi
+0.774961 secondi
+1.480446 secondi
+
+
+Media del tempo di esecuzione: 0.655686 secondi
+Deviazione standard del tempo di esecuzione: 0.462294 secondi
+Numero di thread OpenMP: 4
+Numero di core utilizzati: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1   4) cuda/11.6.0
+
+
+
+gauss_seidel_sequential_omp
+
+Tempo di esecuzione sequenziale: 3.450000 secondi
+Tempo di esecuzione sequenziale: 3.430000 secondi
+Tempo di esecuzione sequenziale: 3.500000 secondi
+Tempo di esecuzione sequenziale: 5.540000 secondi
+Tempo di esecuzione sequenziale: 7.400000 secondi
+Tempo di esecuzione sequenziale: 7.400000 secondi
+Tempo di esecuzione sequenziale: 7.390000 secondi
+Tempo di esecuzione sequenziale: 7.380000 secondi
+Tempo di esecuzione sequenziale: 8.330000 secondi
+Tempo di esecuzione sequenziale: 8.320000 secondi
+
+
+Media del tempo di esecuzione: 6.474 secondi
+Deviazione standard del tempo di esecuzione: 1.599 secondi
+
+Numero di thread OpenMP: 4
+Numero di core utilizzati: 4
+Moduli caricati:
+
+Currently Loaded Modules:
+  1) gcc/13.2.0   2) gnu8/8.3.0   3) openmpi4/4.1.1   4) cuda/11.6.0
+
+
+
+Speedup: 9.864
