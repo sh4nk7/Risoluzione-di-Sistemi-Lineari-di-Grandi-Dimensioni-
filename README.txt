@@ -111,3 +111,7 @@ L'implementazione MPI ha registrato un tempo di esecuzione di 3 secondi, utilizz
 ## Relazione
 
 La relazione del progetto è contenuta nel file `report/relazione_progetto.pdf`. 
+
+## Presentazione 
+
+Le slide della presentazione del progetto sono contenute nel file ' report/presentazione_progetto.pdf'.
